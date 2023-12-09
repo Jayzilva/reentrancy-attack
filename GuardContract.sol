@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/ReentrancyGuard.sol";
 
-contract Bank{
+contract Bank is ReentrancyGuard{
 
     mapping(address => uint) public  balances; 
 
@@ -9,14 +10,13 @@ contract Bank{
         balances[msg.sender] += msg.value;
     }
 
-    function withdraw() public {
+    function withdraw() nonReentrant public {
         uint bal = balances[msg.sender];
         require(bal > 0 );
-        balances[msg.sender] = 0; // as a best approach update the user balance before transaction
         (bool sent,) = msg.sender.call{value : bal}("");
         require(sent, "Fail to send ");
 
-        //balances[msg.sender] = 0; - updating the balance after transaction is vulnerable
+        balances[msg.sender] = 0;
     }
 
     function getBalance() public  view returns(uint) {
