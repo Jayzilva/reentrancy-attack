@@ -11,7 +11,7 @@
 
 <hr/>
 
-- <a href="Contract.sol">Contract</a> somply use updating balance before transaction to prevent reentrancy attack
+- <a href="Contract.sol">Contract</a> simply use updating balance before transaction to prevent reentrancy attack
 
 - <a href="GuardContract.sol">Guard Contract</a> use <a href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/ReentrancyGuard.sol">ReentrancyGuard by Openzeppelin</a>
 
